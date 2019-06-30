@@ -1,0 +1,10 @@
+{% extends "deploy/base.html" %}
+{% block content %}
+
+    <h1>new</h1>
+    <form method = "POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type = "submit">save</button>
+    </form>
+{% endblock %}

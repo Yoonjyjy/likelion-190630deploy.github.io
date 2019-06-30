@@ -1,0 +1,39 @@
+{% extends "deploy/base.html" %}
+{% block content %}
+
+    <h1>detail</h1>
+    <div>
+        <h2>{{post.title}}</h2>
+        <button><a href = "{% url 'edit' post.id %}">edit</a></button>
+        <button><a href = "{% url 'delete' post.id %}">delete</a></button>
+        <button><a href = "{% url 'home' %}">home</a></button>
+        <p>{{post.text}}</p>
+        
+    </div>
+
+    <hr>
+
+    <p>댓글 {{ post.comments.count }}개</p>
+    
+
+    {% for comment in post.comments.all %}
+    <div>
+        <p>-----------</p>
+        <div>{{comment.created_date}}</div>
+        <strong>{{comment.nickname}}</strong>
+        {{comment.text|linebreaks}}
+        <button><a href="{% url 'comment_delete' comment_id=comment.id %}" onclick="return confirm('정말로 삭제하시겠습니까?')" class="btn btn-warning">delete comment</a></button>
+    </div>
+    {% empty %}
+    <p>댓글 없음</p>
+    {% endfor %}
+    <div class="form-group">
+        <h4>댓글을 달아주세요.</h4>
+        <p></p>
+        <form method="POST" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-warning" style="margin-left:290px;">add</button>
+        </form>
+    </div>
+{% endblock %}

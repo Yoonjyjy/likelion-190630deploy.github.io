@@ -1,0 +1,20 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+</head>
+
+<body>
+    <div>
+        <p><strong>윤지영</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {% if user.is_active %}
+        [ {{ user.username }}님 반갑습니다. ]
+        <a href="{% url 'logout' %}">logout</a>
+        {% else %}
+        <a href="{% url 'accounts:signup' %}">signup</a>
+        <a href="{% url 'login' %}">login</a>
+        {% endif %}
+        </p>
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
